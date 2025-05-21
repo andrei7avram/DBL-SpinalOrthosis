@@ -9,8 +9,8 @@ public class StretchSensorR : MonoBehaviour
     [Header("Sensor Settings")]
     public float sensitivity = 1.0f;
     public float maxOutputForce = 10f;
-    public Transform rootBone; // Assign your character's root/hip bone
-    public TextMeshProUGUI forceText; // Assign your UI Text element
+    public Transform rootBone; 
+    public TextMeshProUGUI forceText; 
 
     private SkinnedMeshRenderer _skin;
     private Mesh _mesh;
@@ -24,7 +24,7 @@ public class StretchSensorR : MonoBehaviour
         _skin = GetComponent<SkinnedMeshRenderer>();
         _mesh = _skin.sharedMesh;
         
-        // Find sensor vertices (r>0.9, g/b<0.1)
+        
         _sensorVertices = new List<int>();
         Color[] colors = _mesh.colors;
         for (int i = 0; i < colors.Length; i++)
@@ -33,7 +33,6 @@ public class StretchSensorR : MonoBehaviour
                 _sensorVertices.Add(i);
         }
 
-        // Use baked mesh for rest length calculation
         Mesh bakedMesh = new Mesh();
         _skin.BakeMesh(bakedMesh);
         Vector3[] vertices = bakedMesh.vertices;
@@ -111,7 +110,6 @@ public class StretchSensorR : MonoBehaviour
         }
     }
 
-    // Call this if your character changes rest pose
     public void Recalibrate()
     {
         Vector3[] vertices = _mesh.vertices;
