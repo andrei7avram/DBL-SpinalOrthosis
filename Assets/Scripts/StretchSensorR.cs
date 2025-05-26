@@ -14,58 +14,63 @@ public class StretchSensorR : MonoBehaviour
 
     private SkinnedMeshRenderer _skin;
     private Mesh _mesh;
-    private List<int> _sensorVertices;
-    private float _restLength;
-    private Vector3[] _restLocalPositions;
-    private float _currentForce;
+    private List<int> _sensorVerticesRed;
+    private List<int> _sensorVerticesGreen;
+    private List<int> _sensorVerticesBlue;
+    private List<int> _sensorVerticesPurple;
+    private float _restLengthRed;
+    private float _restLengthGreen;
+    private float _restLengthBlue;
+    private float _restLengthPurple;
+    private float _currentForceRed;
+    private float _currentForceGreen;
+    private float _currentForceBlue;
+    private float _currentForcePurple;
 
     void Start()
     {
         _skin = GetComponent<SkinnedMeshRenderer>();
         _mesh = _skin.sharedMesh;
         
-        
-        _sensorVertices = new List<int>();
+        _sensorVerticesRed = new List<int>();
+        _sensorVerticesGreen = new List<int>();
+        _sensorVerticesBlue = new List<int>();
+        _sensorVerticesPurple = new List<int>();
         Color[] colors = _mesh.colors;
         for (int i = 0; i < colors.Length; i++)
         {
-            if (colors[i].r > 0.9f && colors[i].g < 0.1f && colors[i].b < 0.1f)
-                _sensorVertices.Add(i);
+            Color c = colors[i];
+            if (c.r > 0.9f && c.g < 0.1f && c.b < 0.1f)
+                _sensorVerticesRed.Add(i);
+            if (c.g > 0.9f && c.r < 0.1f && c.b < 0.1f)
+                _sensorVerticesGreen.Add(i);
+            if (c.b > 0.9f && c.r < 0.1f && c.g < 0.1f)
+                _sensorVerticesBlue.Add(i);
+            // Purple: r > 0.4 && r < 0.9, b > 0.4 && b < 0.9, g < 0.1
+            if (c.r > 0.4f && c.r < 0.9f && c.b > 0.4f && c.b < 0.9f && c.g < 0.1f)
+                _sensorVerticesPurple.Add(i);
         }
 
+        // Calculate rest lengths for all selections
         Mesh bakedMesh = new Mesh();
         _skin.BakeMesh(bakedMesh);
         Vector3[] vertices = bakedMesh.vertices;
 
-        float restLength = 0f;
-        for (int i = 1; i < _sensorVertices.Count; i++)
-        {
-            Vector3 p1 = _skin.transform.TransformPoint(vertices[_sensorVertices[i - 1]]);
-            Vector3 p2 = _skin.transform.TransformPoint(vertices[_sensorVertices[i]]);
-            restLength += Vector3.Distance(p1, p2);
-        }
-        _restLength = restLength;
-
-        Debug.Log($"Stretch sensor initialized with {_sensorVertices.Count} vertices. Rest length: {_restLength}");
+        _restLengthRed = CalculateLength(_sensorVerticesRed, vertices);
+        _restLengthGreen = CalculateLength(_sensorVerticesGreen, vertices);
+        _restLengthBlue = CalculateLength(_sensorVerticesBlue, vertices);
+        _restLengthPurple = CalculateLength(_sensorVerticesPurple, vertices);
     }
 
-    float CalculateCurrentLength()
+    float CalculateLength(List<int> indices, Vector3[] vertices)
     {
         float length = 0f;
-        Vector3[] vertices = _mesh.vertices;
-        
-        for (int i = 1; i < _sensorVertices.Count; i++)
+        for (int i = 1; i < indices.Count; i++)
         {
-            Vector3 currentPos1 = rootBone.InverseTransformPoint(
-                _skin.transform.TransformPoint(vertices[_sensorVertices[i-1]])
-            );
-            Vector3 currentPos2 = rootBone.InverseTransformPoint(
-                _skin.transform.TransformPoint(vertices[_sensorVertices[i]])
-            );
-            
-            length += Vector3.Distance(currentPos1, currentPos2);
+            Vector3 p1 = _skin.transform.TransformPoint(vertices[indices[i - 1]]);
+            Vector3 p2 = _skin.transform.TransformPoint(vertices[indices[i]]);
+            length += Vector3.Distance(p1, p2);
         }
-        
         return length;
     }
 
@@ -73,54 +78,75 @@ public class StretchSensorR : MonoBehaviour
     {
         Mesh bakedMesh = new Mesh();
         _skin.BakeMesh(bakedMesh);
-
-        float currentLength = 0f;
         Vector3[] vertices = bakedMesh.vertices;
-        for (int i = 1; i < _sensorVertices.Count; i++)
-        {
-            Vector3 currentPos1 = _skin.transform.TransformPoint(vertices[_sensorVertices[i - 1]]);
-            Vector3 currentPos2 = _skin.transform.TransformPoint(vertices[_sensorVertices[i]]);
-            currentLength += Vector3.Distance(currentPos1, currentPos2);
-        }
 
-        float stretch = Mathf.Max(0, currentLength - _restLength);
-        _currentForce = Mathf.Clamp(stretch * sensitivity, 0, maxOutputForce);
+        float currentLengthRed = CalculateLength(_sensorVerticesRed, vertices);
+        float currentLengthGreen = CalculateLength(_sensorVerticesGreen, vertices);
+        float currentLengthBlue = CalculateLength(_sensorVerticesBlue, vertices);
+        float currentLengthPurple = CalculateLength(_sensorVerticesPurple, vertices);
 
-        // Debug output
-        Debug.Log($"Current length: {currentLength}, Rest length: {_restLength}, Stretch: {stretch}, Force: {_currentForce}");
+        float stretchRed = Mathf.Max(0, currentLengthRed - _restLengthRed);
+        float stretchGreen = Mathf.Max(0, currentLengthGreen - _restLengthGreen);
+        float stretchBlue = Mathf.Max(0, currentLengthBlue - _restLengthBlue);
+        float stretchPurple = Mathf.Max(0, currentLengthPurple - _restLengthPurple);
+
+        _currentForceRed = Mathf.Clamp(stretchRed * sensitivity, 0, maxOutputForce);
+        _currentForceGreen = Mathf.Clamp(stretchGreen * sensitivity, 0, maxOutputForce);
+        _currentForceBlue = Mathf.Clamp(stretchBlue * sensitivity, 0, maxOutputForce);
+        _currentForcePurple = Mathf.Clamp(stretchPurple * sensitivity * (45f / 25f), 0, maxOutputForce);
 
         if (forceText != null)
         {
-            forceText.text = $"Force: {_currentForce.ToString("F2")}";
+            forceText.text =
+                $"Red Force: {_currentForceRed:F2}\n" +
+                "<color=green>Green Force: " + $"{_currentForceGreen:F2}</color>\n" +
+                "<color=blue>Blue Force: " + $"{_currentForceBlue:F2}</color>\n" +
+                "<color=#A020F0>Purple Force: " + $"{_currentForcePurple:F2}</color>";
         }
     }
 
     void OnDrawGizmosSelected()
     {
-        if (!Application.isPlaying || _sensorVertices == null || _mesh == null) return;
-        
-        Vector3[] vertices = _mesh.vertices;
+        if (!Application.isPlaying || _mesh == null || _skin == null) return;
+
+        Mesh bakedMesh = new Mesh();
+        _skin.BakeMesh(bakedMesh);
+        Vector3[] vertices = bakedMesh.vertices;
+
+        // Draw red sensor
         Gizmos.color = Color.red;
-        
-        for (int i = 1; i < _sensorVertices.Count; i++)
+        for (int i = 1; i < (_sensorVerticesRed?.Count ?? 0); i++)
         {
-            Vector3 p1 = _skin.transform.TransformPoint(vertices[_sensorVertices[i-1]]);
-            Vector3 p2 = _skin.transform.TransformPoint(vertices[_sensorVertices[i]]);
+            Vector3 p1 = _skin.transform.TransformPoint(vertices[_sensorVerticesRed[i - 1]]);
+            Vector3 p2 = _skin.transform.TransformPoint(vertices[_sensorVerticesRed[i]]);
             Gizmos.DrawLine(p1, p2);
         }
-    }
 
-    public void Recalibrate()
-    {
-        Vector3[] vertices = _mesh.vertices;
-        for (int i = 0; i < _sensorVertices.Count; i++)
+        // Draw green sensor
+        Gizmos.color = Color.green;
+        for (int i = 1; i < (_sensorVerticesGreen?.Count ?? 0); i++)
         {
-            _restLocalPositions[i] = _skin.transform.TransformPoint(vertices[_sensorVertices[i]]);
+            Vector3 p1 = _skin.transform.TransformPoint(vertices[_sensorVerticesGreen[i - 1]]);
+            Vector3 p2 = _skin.transform.TransformPoint(vertices[_sensorVerticesGreen[i]]);
+            Gizmos.DrawLine(p1, p2);
         }
-        _restLength = 0f;
-        for (int i = 1; i < _sensorVertices.Count; i++)
+
+        // Draw blue sensor
+        Gizmos.color = Color.blue;
+        for (int i = 1; i < (_sensorVerticesBlue?.Count ?? 0); i++)
         {
-            _restLength += Vector3.Distance(_restLocalPositions[i - 1], _restLocalPositions[i]);
+            Vector3 p1 = _skin.transform.TransformPoint(vertices[_sensorVerticesBlue[i - 1]]);
+            Vector3 p2 = _skin.transform.TransformPoint(vertices[_sensorVerticesBlue[i]]);
+            Gizmos.DrawLine(p1, p2);
+        }
+
+        // Draw purple sensor
+        Gizmos.color = new Color(0.627f, 0.125f, 0.941f); // #A020F0
+        for (int i = 1; i < (_sensorVerticesPurple?.Count ?? 0); i++)
+        {
+            Vector3 p1 = _skin.transform.TransformPoint(vertices[_sensorVerticesPurple[i - 1]]);
+            Vector3 p2 = _skin.transform.TransformPoint(vertices[_sensorVerticesPurple[i]]);
+            Gizmos.DrawLine(p1, p2);
         }
     }
 }
