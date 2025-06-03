@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems; // Add this
 
 public class OrbitCamera : MonoBehaviour
 {
@@ -22,6 +23,13 @@ public class OrbitCamera : MonoBehaviour
     private void Update()
     {
         if (target == null) return;
+
+        // Disable camera orbit if pointer is over UI
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            isDragging = false;
+            return;
+        }
 
         // Check if mouse is over this camera's viewport
         Vector3 viewportMousePos = cam.ScreenToViewportPoint(Input.mousePosition);
