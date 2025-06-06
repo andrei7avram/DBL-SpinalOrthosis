@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "DBL-SpinalOrthosis.sln"
+    "dotnet.defaultSolution": "DBL-SpinalOrthosis.sln",
+    "FSharp.suggestGitignore": false
 }
