@@ -28,12 +28,12 @@ public class StretchSensorR : MonoBehaviour
     private float _restLengthPurple;
     private float _restLengthOrange;
     private float _restLengthCyan;
-    private float _currentForceRed;
-    private float _currentForceGreen;
-    private float _currentForceBlue;
-    private float _currentForcePurple;
-    private float _currentForceOrange;
-    private float _currentForceCyan;
+    public float _currentForceRed;
+    public float _currentForceGreen;
+    public float _currentForceBlue;
+    public float _currentForcePurple;
+    public float _currentForceOrange;
+    public float _currentForceCyan;
 
     void Start()
     {
@@ -57,18 +57,17 @@ public class StretchSensorR : MonoBehaviour
                 _sensorVerticesGreen.Add(i);
             if (c.b > 0.9f && c.r < 0.1f && c.g < 0.1f)
                 _sensorVerticesBlue.Add(i);
-            // Purple: r > 0.4 && r < 0.9, b > 0.4 && b < 0.9, g < 0.1
+            
             if (c.r > 0.4f && c.r < 0.9f && c.b > 0.4f && c.b < 0.9f && c.g < 0.1f)
                 _sensorVerticesPurple.Add(i);
-            // Orange: r = 0.5, g = 0.5, b = 0
+            
             if (c.r > 0.4f && c.r < 0.9f && c.b < 0.1f && c.g > 0.4f && c.g < 0.9f)
                 _sensorVerticesOrange.Add(i);
-            // Cyan: r = 0, g = 0.5, b = 0.5
             if (c.r < 0.1f && c.g > 0.4f && c.g < 0.9f && c.b > 0.4f && c.b < 0.9f)
                 _sensorVerticesCyan.Add(i);
         }
 
-        // --- ORDER BLUE VERTICES ---
+        // ORDER BLUE VERTICES 
         _sensorVerticesBlue.Sort((a, b) => {
             Vector3 va = _mesh.vertices[a];
             Vector3 vb = _mesh.vertices[b];
@@ -79,7 +78,7 @@ public class StretchSensorR : MonoBehaviour
             return va.z.CompareTo(vb.z);
         });
 
-        // --- ORDER PURPLE VERTICES AS MIRROR OF BLUE ---
+        //  ORDER PURPLE VERTICES AS MIRROR OF BLUE 
         List<int> orderedPurple = new List<int>();
         foreach (int blueIdx in _sensorVerticesBlue)
         {
@@ -130,7 +129,7 @@ public class StretchSensorR : MonoBehaviour
 
     void Update()
     {
-        _bakedMesh.Clear(); // Clear previous data
+        _bakedMesh.Clear(); 
         _skin.BakeMesh(_bakedMesh);
         Vector3[] vertices = _bakedMesh.vertices;
 
