@@ -36,7 +36,7 @@ public class Parent : MonoBehaviour
                 // Clamp the rotation based on the spine segment
                 if (i < 7) // Cervical Spine
                 {
-                    rigBoneEulerRotation.x = ClampAngle(rigBoneEulerRotation.x, -70, 90); // Flexion/Extension
+                    rigBoneEulerRotation.x = ClampAngle(rigBoneEulerRotation.x, -45, 45); // Flexion/Extension
                     rigBoneEulerRotation.y = ClampAngle(rigBoneEulerRotation.y, -90, 90); // Axial Rotation
                     rigBoneEulerRotation.z = ClampAngle(rigBoneEulerRotation.z, -50, 50); // Lateral Flexion
                 }

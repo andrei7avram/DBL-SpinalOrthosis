@@ -147,12 +147,12 @@ public class StretchSensorR : MonoBehaviour
         float stretchOrange = Mathf.Max(0, currentLengthOrange - _restLengthOrange);
         float stretchCyan = Mathf.Max(0, currentLengthCyan - _restLengthCyan);
 
-        _currentForceRed = Mathf.Clamp(stretchRed * sensitivity, 0, maxOutputForce);
-        _currentForceGreen = Mathf.Clamp(stretchGreen * sensitivity, 0, maxOutputForce);
-        _currentForceBlue = Mathf.Clamp(stretchBlue * sensitivity, 0, maxOutputForce);
-        _currentForcePurple = Mathf.Clamp(stretchPurple * sensitivity, 0, maxOutputForce);
-        _currentForceOrange = Mathf.Clamp(stretchOrange * sensitivity, 0, maxOutputForce);
-        _currentForceCyan = Mathf.Clamp(stretchCyan * sensitivity, 0, maxOutputForce);
+        _currentForceRed = Mathf.Clamp(stretchRed * sensitivity*10, 0, maxOutputForce);
+        _currentForceGreen = Mathf.Clamp(stretchGreen * sensitivity*10, 0, maxOutputForce);
+        _currentForceBlue = Mathf.Clamp(stretchBlue * sensitivity*10, 0, maxOutputForce);
+        _currentForcePurple = Mathf.Clamp(stretchPurple * sensitivity*10, 0, maxOutputForce);
+        _currentForceOrange = Mathf.Clamp(stretchOrange * sensitivity*10, 0, maxOutputForce);
+        _currentForceCyan = Mathf.Clamp(stretchCyan * sensitivity*10, 0, maxOutputForce);
 
         if (forceText != null)
         {
