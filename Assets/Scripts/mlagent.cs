@@ -11,24 +11,23 @@ public class mlagent : Agent
     public StretchSensorR stretchSensor;
     public RandomPose randomPoseScript;
     public SelectBones selectBonesScript;
+    public int solvedPoses = 0; // Track how many poses have been solved
 
-    [Header("New Training Approach")]
+    [Header("Training Settings")]
     [SerializeField] private int maxStepsPerEpisode = 500;
     [SerializeField] private float stepPenalty = -0.002f;
     [SerializeField] private float successReward = 50f;
     [SerializeField] private float timeoutPenalty = -5f;
     [SerializeField] private float actionSmoothing = 0.8f;
-    [SerializeField] private float improvementThreshold = 0.05f;
     [SerializeField] private float successThreshold = 0.1f;
 
     [Header("Curriculum Learning")]
     [SerializeField] private float initialActionScale = 5f;
     [SerializeField] private float finalActionScale = 0.5f;
-    [SerializeField] private int thresholdReductionSteps = 500000;
     [SerializeField] private int scaleReductionSteps = 300000;
 
-    [Header("Debug")]
-    [SerializeField] private bool enableDebug = false;
+    [Header("Pose Change Settings")]
+    [SerializeField] private int episodesPerPose = 50;  // Change pose every N episodes
 
     private int boneCount;
     private List<Transform> rigBonesHalved;
@@ -39,15 +38,13 @@ public class mlagent : Agent
     private Vector3[] lastActions;
     private float currentActionScale;
     private int currentStepCount = 0;
-    
-    // New tracking variables
+
     private float bestErrorThisEpisode = float.MaxValue;
-    private float lastTotalError = float.MaxValue;
     private int stepsWithoutImprovement = 0;
+    private int episodesSinceLastPoseChange = 0;
 
     public override void Initialize()
     {
-        // Build bone hierarchy first
         if (selectBonesScript != null)
         {
             selectBonesScript.BuildBoneHierarchy();
@@ -58,7 +55,6 @@ public class mlagent : Agent
             return;
         }
 
-        // Initialize rigBonesHalved: every other bone from SelectBones.boneArray
         rigBonesHalved = new List<Transform>();
         for (int i = 0; i < selectBonesScript.boneArray.Length; i += 2)
         {
@@ -69,7 +65,6 @@ public class mlagent : Agent
         }
 
         boneCount = rigBonesHalved.Count;
-
         if (boneCount == 0)
         {
             Debug.LogError($"Agent {gameObject.name}: NO BONES FOUND! Check SelectBones setup.");
@@ -89,7 +84,7 @@ public class mlagent : Agent
     private void UpdateCurriculumParameters()
     {
         float totalSteps = Academy.Instance.TotalStepCount;
-        currentActionScale = Mathf.Lerp(initialActionScale, finalActionScale, 
+        currentActionScale = Mathf.Lerp(initialActionScale, finalActionScale,
             Mathf.Clamp01(totalSteps / scaleReductionSteps));
     }
 
@@ -98,10 +93,20 @@ public class mlagent : Agent
         currentStepCount = 0;
         UpdateCurriculumParameters();
 
-        // Reset episode tracking
         bestErrorThisEpisode = float.MaxValue;
-        lastTotalError = float.MaxValue;
         stepsWithoutImprovement = 0;
+
+        // Pose change control: only change pose every episodesPerPose episodes
+        if (needNewPose || episodesSinceLastPoseChange >= episodesPerPose)
+        {
+            episodesSinceLastPoseChange = 0;
+            needNewPose = true;
+        }
+        else
+        {
+            needNewPose = false;
+        }
+        episodesSinceLastPoseChange++;
 
         if (needNewPose)
         {
@@ -110,23 +115,7 @@ public class mlagent : Agent
         else
         {
             ResetToInitialPose();
-            UpdateTargetForces();
-            
-            // Check if target forces are set
-            bool allZeros = true;
-            for (int i = 0; i < 6; i++)
-            {
-                if (targetForces[i] != 0f)
-                {
-                    allZeros = false;
-                    break;
-                }
-            }
-            
-            if (allZeros)
-            {
-                Debug.LogError($"Agent {gameObject.name}: TARGET FORCES ARE ALL ZEROS!");
-            }
+            UpdateTargetForcesSafe();
 
             for (int i = 0; i < boneCount; i++)
             {
@@ -138,30 +127,14 @@ public class mlagent : Agent
     private IEnumerator GenerateNewPoseCoroutine()
     {
         randomPoseScript.GenerateRandomPoseAndStoreStretch();
-        
-        // Wait for the pose generation coroutine to complete
-        yield return new WaitForSeconds(0.1f);
-        
-        needNewPose = false;
-        
-        ResetToInitialPose();
-        UpdateTargetForces();
 
-        // Check if target forces are set
-        bool allZeros = true;
-        for (int i = 0; i < 6; i++)
-        {
-            if (targetForces[i] != 0f)
-            {
-                allZeros = false;
-                break;
-            }
-        }
-        
-        if (allZeros)
-        {
-            Debug.LogError($"Agent {gameObject.name}: TARGET FORCES ARE ALL ZEROS!");
-        }
+        // Wait for mesh update & sensor refresh (adjust wait time if needed)
+        yield return new WaitForEndOfFrame();
+
+        needNewPose = false;
+
+        ResetToInitialPose();
+        UpdateTargetForcesSafe();
 
         for (int i = 0; i < boneCount; i++)
         {
@@ -180,11 +153,19 @@ public class mlagent : Agent
         }
     }
 
-    private void UpdateTargetForces()
+    private void UpdateTargetForcesSafe()
     {
         if (randomPoseScript.stretchValues != null && randomPoseScript.stretchValues.Length >= 6)
         {
-            System.Array.Copy(randomPoseScript.stretchValues, targetForces, 6);
+            for (int i = 0; i < 6; i++)
+            {
+                targetForces[i] = randomPoseScript.stretchValues[i];
+            }
+        }
+        else
+        {
+            // Fill with zeros if invalid
+            for (int i = 0; i < 6; i++) targetForces[i] = 0f;
         }
     }
 
@@ -209,7 +190,7 @@ public class mlagent : Agent
             sensor.AddObservation(Mathf.Clamp(targetForces[i] * 10f, 0f, 10f));
         }
 
-        // Add current bone rotations
+        // Add current bone rotations normalized [-1,1]
         for (int i = 0; i < rigBonesHalved.Count; i++)
         {
             var bone = rigBonesHalved[i];
@@ -241,7 +222,6 @@ public class mlagent : Agent
         var actionArray = actions.ContinuousActions;
         int idx = 0;
 
-        // Apply actions to bones
         for (int i = 0; i < boneCount; i++)
         {
             if (rigBonesHalved[i] == null)
@@ -259,112 +239,89 @@ public class mlagent : Agent
             Vector3 smoothedAction = Vector3.Lerp(lastActions[i], rawAction, actionSmoothing);
             lastActions[i] = smoothedAction;
 
-            // Calculate new euler angles within ±5 degrees of initial pose
             Vector3 initialEuler = initialBoneEulerAngles[i];
             Vector3 newEuler = new Vector3(
-                Mathf.Clamp(initialEuler.x + smoothedAction.x * 5f, initialEuler.x - 5f, initialEuler.x + 5f),
-                Mathf.Clamp(initialEuler.y + smoothedAction.y * 5f, initialEuler.y - 5f, initialEuler.y + 5f),
-                Mathf.Clamp(initialEuler.z + smoothedAction.z * 5f, initialEuler.z - 5f, initialEuler.z + 5f)
+                Mathf.Clamp(initialEuler.x + smoothedAction.x * currentActionScale, initialEuler.x - 5f, initialEuler.x + 5f),
+                Mathf.Clamp(initialEuler.y + smoothedAction.y * currentActionScale, initialEuler.y - 5f, initialEuler.y + 5f),
+                Mathf.Clamp(initialEuler.z + smoothedAction.z * currentActionScale, initialEuler.z - 5f, initialEuler.z + 5f)
             );
 
             rigBonesHalved[i].localEulerAngles = newEuler;
         }
 
-        // Calculate reward based on improvement
         float reward = CalculateReward() + stepPenalty;
         SetReward(reward);
 
-        // Check for success or early termination
         if (IsSuccessful())
         {
-            Debug.Log($"Agent {gameObject.name}: SUCCESS! Steps: {currentStepCount}, Final Error: {CalculateTotalError():F3}");
             AddReward(successReward);
-            needNewPose = true; // Only change pose when threshold is reached
+            solvedPoses++;
+            if (!Application.isBatchMode) // Avoid log spam during headless runs
+            {
+                Debug.Log($"Agent {gameObject.name}: SUCCESS! Steps: {currentStepCount}, Reward: {GetCumulativeReward():F2}");
+                Debug.Log($"Target Forces: [{string.Join(", ", targetForces)}]");
+                Debug.Log($"Current Forces: [{string.Join(", ", currentForces)}]");
+            }
+            needNewPose = true;
             EndEpisode();
         }
         else if (currentStepCount >= maxStepsPerEpisode)
         {
             AddReward(timeoutPenalty);
-            // Don't change pose on timeout - keep trying same pose
             EndEpisode();
         }
         else if (stepsWithoutImprovement > 100)
         {
             AddReward(timeoutPenalty * 0.5f);
-            // Don't change pose on early termination - keep trying same pose
             EndEpisode();
+            
         }
     }
 
     private float CalculateReward()
     {
         float totalError = CalculateTotalError();
-        
-        // Initialize bestError on first step
+
         if (bestErrorThisEpisode == float.MaxValue)
         {
             bestErrorThisEpisode = totalError;
-            return 0f; // Neutral reward for first step
+            return 0f;
         }
-        
-        // Track improvement
+
         bool improved = false;
         if (totalError < bestErrorThisEpisode)
         {
-            float improvement = bestErrorThisEpisode - totalError;
             bestErrorThisEpisode = totalError;
             stepsWithoutImprovement = 0;
             improved = true;
-            
-            // Big reward for improvement - clamp to prevent infinity
-            return Mathf.Clamp(improvement * 20f, 0f, 10f);
         }
         else
         {
             stepsWithoutImprovement++;
         }
 
-        // Base reward for being close to target
-        float baseReward = 1f / (1f + totalError);
-        
-        // Penalty for no improvement
-        float improvementPenalty = improved ? 0f : -0.01f;
-        
-        float finalReward = baseReward + improvementPenalty;
-        
-        // Safety check - prevent NaN or infinity
-        if (float.IsNaN(finalReward) || float.IsInfinity(finalReward))
-        {
-            return 0f;
-        }
-        
-        return finalReward;
+        return -totalError;
     }
 
     private float CalculateTotalError()
     {
-        float totalError = 0f;
+        float total = 0f;
         for (int i = 0; i < 6; i++)
         {
-            totalError += Mathf.Abs(currentForces[i] - targetForces[i]);
+            float diff = currentForces[i] - targetForces[i];
+            total += Mathf.Abs(diff);
         }
-        return totalError;
+        return total;
     }
 
     private bool IsSuccessful()
+{
+    float totalError = 0f;
+    for (int i = 0; i < 6; i++)
     {
-        float totalError = CalculateTotalError();
-        
-        // Success ONLY if we meet the threshold
-        return totalError < successThreshold;
+        totalError += Mathf.Abs(currentForces[i] - targetForces[i]);
     }
+    return totalError < successThreshold;
+}
 
-    public override void Heuristic(in ActionBuffers actionsOut)
-    {
-        var continuousActionsOut = actionsOut.ContinuousActions;
-        for (int i = 0; i < boneCount * 3; i++)
-        {
-            continuousActionsOut[i] = Random.Range(-0.2f, 0.2f);
-        }
-    }
 }

@@ -794,7 +794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1018,18 +1018,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 80802830}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 80802826}
+  solvedPoses: 0
   maxStepsPerEpisode: 500
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0.1
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!1001 &88201860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2833,18 +2832,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 212949561}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 212949557}
+  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!1001 &216541465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3631,18 +3629,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 216541472}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 216541468}
+  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!1001 &239194893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4429,18 +4426,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 239194900}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 239194896}
+  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!4 &243015523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2614762758377866007, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
@@ -4936,18 +4932,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 453460233}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 453460244}
+  solvedPoses: 0
   maxStepsPerEpisode: 500
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0.1
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!114 &453460244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7136,18 +7131,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 790590730}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 790590726}
+  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!1001 &805157880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7934,18 +7928,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 805157887}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 805157883}
+  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!1 &810073202
 GameObject:
   m_ObjectHideFlags: 0
@@ -8748,7 +8741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9887,7 +9880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10111,18 +10104,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 1467129461}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 1467129457}
+  solvedPoses: 0
   maxStepsPerEpisode: 500
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0.1
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!1001 &1476682033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10689,7 +10681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10913,18 +10905,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 1476682040}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 1476682036}
+  solvedPoses: 0
   maxStepsPerEpisode: 500
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0.1
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!4 &1481441480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4698601270361415218, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
@@ -11869,18 +11860,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 2039978355}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2039978351}
+  solvedPoses: 0
   maxStepsPerEpisode: 500
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0.1
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!1001 &2073980645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12667,18 +12657,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 2073980652}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2073980648}
+  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!1001 &2105264559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13465,18 +13454,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 2105264566}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2105264562}
+  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!1 &2134611837
 GameObject:
   m_ObjectHideFlags: 0
@@ -14079,7 +14067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14303,18 +14291,17 @@ MonoBehaviour:
   stretchSensor: {fileID: 2141046093}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2141046089}
+  solvedPoses: 0
   maxStepsPerEpisode: 500
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0.1
   initialActionScale: 5
   finalActionScale: 0.5
-  thresholdReductionSteps: 200000
   scaleReductionSteps: 300000
-  enableDebug: 1
+  episodesPerPose: 50
 --- !u!4 &90457147015907549
 Transform:
   m_ObjectHideFlags: 0

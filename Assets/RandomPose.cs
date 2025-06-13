@@ -88,7 +88,7 @@ public class RandomPose : MonoBehaviour
         stretchValues[5] = stretchSensor._currentForceCyan;
 
         // DEBUG: Check if we got non-zero values
-        Debug.Log($"RandomPose: Generated stretch values: [{stretchValues[0]:F3}, {stretchValues[1]:F3}, {stretchValues[2]:F3}, {stretchValues[3]:F3}, {stretchValues[4]:F3}, {stretchValues[5]:F3}]");
+        //Debug.Log($"RandomPose: Generated stretch values: [{stretchValues[0]:F3}, {stretchValues[1]:F3}, {stretchValues[2]:F3}, {stretchValues[3]:F3}, {stretchValues[4]:F3}, {stretchValues[5]:F3}]");
         
         bool allZeros = true;
         for (int i = 0; i < stretchValues.Length; i++)
@@ -102,7 +102,7 @@ public class RandomPose : MonoBehaviour
         
         if (allZeros)
         {
-            Debug.LogWarning("RandomPose: All stretch values are still zero after pose generation!");
+            //Debug.LogWarning("RandomPose: All stretch values are still zero after pose generation!");
         }
     }
 }
