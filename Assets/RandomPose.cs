@@ -2,10 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class BadPosture
+{
+    public string name; // "Lordosis", "Scoliosis", "Forward Head", etc.
+    [Header("Bone Rotation Offsets (13 bones - X, Y, Z for each)")]
+    public Vector3[] boneRotationOffsets = new Vector3[13]; // Offsets from neutral position
+    [Range(0f, 5f)]
+    public float variationRange = 3f; // ±3 degree random variation
+}
+
 public class RandomPose : MonoBehaviour
 {
     public StretchSensorR stretchSensor;
     public SelectBones selectBonesScript;
+
+    [Header("Medical Posture Presets")]
+    public BadPosture[] badPostures = new BadPosture[5]; // 6 main bad postures
 
     [Header("Output: Stretch values for each sensor")]
     public float[] stretchValues; // [Red, Green, Blue, Purple, Orange, Cyan]
@@ -42,15 +55,26 @@ public class RandomPose : MonoBehaviour
         {
             Debug.LogError("SelectBones script or boneArray not assigned!");
         }
+
+        // Initialize bad posture arrays if empty
+        for (int i = 0; i < badPostures.Length; i++)
+        {
+            if (badPostures[i] == null)
+            {
+                badPostures[i] = new BadPosture();
+                badPostures[i].name = $"Bad Posture {i + 1}";
+                badPostures[i].boneRotationOffsets = new Vector3[13];
+            }
+        }
     }
 
-    [ContextMenu("Generate Random Pose and Store Stretch")]
+    [ContextMenu("Generate Medical Posture and Store Stretch")]
     public void GenerateRandomPoseAndStoreStretch()
     {
-        StartCoroutine(GeneratePoseCoroutine());
+        StartCoroutine(GenerateMedicalPostureCoroutine());
     }
 
-    private IEnumerator GeneratePoseCoroutine()
+    private IEnumerator GenerateMedicalPostureCoroutine()
     {
         // --- Reset all bones in halfRigBones to their initial rotation ---
         for (int i = 0; i < halfRigBones.Count; i++)
@@ -63,15 +87,33 @@ public class RandomPose : MonoBehaviour
         // Wait a frame for the reset to take effect
         yield return null;
 
-        // --- Generate new random pose for halfRigBones ---
-        for (int i = 0; i < halfRigBones.Count; i++)
+        // --- Randomly select one of the 6 bad postures ---
+        int randomPostureIndex = Random.Range(0, badPostures.Length);
+        BadPosture selectedPosture = badPostures[randomPostureIndex];
+
+        Debug.Log($"RandomPose: Generating {selectedPosture.name}");
+
+        // --- Apply the selected bad posture with random variation ---
+        for (int i = 0; i < halfRigBones.Count && i < selectedPosture.boneRotationOffsets.Length; i++)
         {
             if (halfRigBones[i] == null) continue;
-            Vector3 randomEuler = initialEulerAngles[i * 2];
-            randomEuler.x += Random.Range(-5f, 5f);
-            randomEuler.y += Random.Range(-5f, 5f);
-            randomEuler.z += Random.Range(-5f, 5f);
-            halfRigBones[i].localEulerAngles = randomEuler;
+
+            // Start with initial neutral position
+            Vector3 baseRotation = initialEulerAngles[i * 2];
+            
+            // Add the medical posture offset
+            Vector3 postureOffset = selectedPosture.boneRotationOffsets[i];
+            
+            // Add random variation for realism
+            Vector3 randomVariation = new Vector3(
+                Random.Range(-selectedPosture.variationRange, selectedPosture.variationRange),
+                Random.Range(-selectedPosture.variationRange, selectedPosture.variationRange),
+                Random.Range(-selectedPosture.variationRange, selectedPosture.variationRange)
+            );
+
+            // Apply: neutral + medical offset + random variation
+            Vector3 finalRotation = baseRotation + postureOffset + randomVariation;
+            halfRigBones[i].localEulerAngles = finalRotation;
         }
 
         // CRITICAL: Wait for sensors to update after bone movements
@@ -88,7 +130,7 @@ public class RandomPose : MonoBehaviour
         stretchValues[5] = stretchSensor._currentForceCyan;
 
         // DEBUG: Check if we got non-zero values
-        Debug.Log($"RandomPose: Generated stretch values: [{stretchValues[0]:F3}, {stretchValues[1]:F3}, {stretchValues[2]:F3}, {stretchValues[3]:F3}, {stretchValues[4]:F3}, {stretchValues[5]:F3}]");
+        Debug.Log($"RandomPose: {selectedPosture.name} generated stretch values: [{stretchValues[0]:F3}, {stretchValues[1]:F3}, {stretchValues[2]:F3}, {stretchValues[3]:F3}, {stretchValues[4]:F3}, {stretchValues[5]:F3}]");
         
         bool allZeros = true;
         for (int i = 0; i < stretchValues.Length; i++)
@@ -102,7 +144,56 @@ public class RandomPose : MonoBehaviour
         
         if (allZeros)
         {
-            Debug.LogWarning("RandomPose: All stretch values are still zero after pose generation!");
+            Debug.LogWarning($"RandomPose: All stretch values are still zero after generating {selectedPosture.name}!");
         }
+    }
+
+    // Helper method to test individual postures
+    [ContextMenu("Test Specific Posture (Index 0)")]
+    public void TestFirstPosture()
+    {
+        if (badPostures.Length > 0)
+        {
+            StartCoroutine(TestSpecificPosture(0));
+        }
+    }
+
+    private IEnumerator TestSpecificPosture(int postureIndex)
+    {
+        if (postureIndex >= badPostures.Length) yield break;
+
+        BadPosture testPosture = badPostures[postureIndex];
+        Debug.Log($"Testing {testPosture.name}...");
+
+        // Reset bones
+        for (int i = 0; i < halfRigBones.Count; i++)
+        {
+            if (halfRigBones[i] == null) continue;
+            halfRigBones[i].localEulerAngles = initialEulerAngles[i * 2];
+        }
+
+        yield return null;
+
+        // Apply posture without variation
+        for (int i = 0; i < halfRigBones.Count && i < testPosture.boneRotationOffsets.Length; i++)
+        {
+            if (halfRigBones[i] == null) continue;
+            Vector3 finalRotation = initialEulerAngles[i * 2] + testPosture.boneRotationOffsets[i];
+            halfRigBones[i].localEulerAngles = finalRotation;
+        }
+
+        yield return new WaitForFixedUpdate();
+        yield return null;
+
+        // Read sensors
+        float[] testValues = new float[6];
+        testValues[0] = stretchSensor._currentForceRed;
+        testValues[1] = stretchSensor._currentForceGreen;
+        testValues[2] = stretchSensor._currentForceBlue;
+        testValues[3] = stretchSensor._currentForcePurple;
+        testValues[4] = stretchSensor._currentForceOrange;
+        testValues[5] = stretchSensor._currentForceCyan;
+
+        Debug.Log($"Test {testPosture.name}: [{testValues[0]:F3}, {testValues[1]:F3}, {testValues[2]:F3}, {testValues[3]:F3}, {testValues[4]:F3}, {testValues[5]:F3}]");
     }
 }
