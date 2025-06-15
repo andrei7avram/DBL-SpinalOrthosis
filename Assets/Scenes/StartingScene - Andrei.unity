@@ -999,6 +999,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &80802831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1794,6 +1796,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &88201864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1820,6 +1824,102 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stretchSensor: {fileID: 88201863}
   selectBonesScript: {fileID: 88201871}
+  badPostures:
+  - name: Kyphosis
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -9.21, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 0.3
+    affectX: 1
+    affectY: 1
+    affectZ: 0
+  - name: Lordosis
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 15, y: 0, z: 0}
+    - {x: -20, y: 0, z: 0}
+    - {x: -15, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 0.5
+    affectX: 1
+    affectY: 1
+    affectZ: 0
+  - name: Forward-Neck
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -9.21, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 0.2
+    affectX: 1
+    affectY: 1
+    affectZ: 1
+  - name: R-Scoliosis
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 10}
+    - {x: 0, y: 0, z: 10}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: -10}
+    - {x: -9.21, y: 0, z: -10}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 1.5
+    affectX: 1
+    affectY: 1
+    affectZ: 1
+  - name: L-Scoliosis
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: -10}
+    - {x: 0, y: 0, z: -10}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 10}
+    - {x: -9.21, y: 0, z: 10}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 1.5
+    affectX: 1
+    affectY: 1
+    affectZ: 1
   stretchValues: []
   halfRigBones: []
 --- !u!114 &88201868
@@ -2814,6 +2914,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &212949562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3612,6 +3714,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &216541473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4410,6 +4514,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &239194901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4873,6 +4979,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &453460235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4886,7 +4994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -7117,6 +7225,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &790590731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7915,6 +8025,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &805157888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10092,6 +10204,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &1467129462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10894,6 +11008,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &1476682041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11850,6 +11966,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &2039978356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12648,6 +12766,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &2073980653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13446,6 +13566,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &2105264567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14284,6 +14406,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &2141046094
 MonoBehaviour:
   m_ObjectHideFlags: 0

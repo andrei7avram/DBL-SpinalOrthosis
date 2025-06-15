@@ -10,6 +10,9 @@ public class BadPosture
     public Vector3[] boneRotationOffsets = new Vector3[13]; // Offsets from neutral position
     [Range(0f, 5f)]
     public float variationRange = 3f; // ±3 degree random variation
+    public bool affectX = true; // Affect X rotation
+    public bool affectY = true; // Affect Y rotation
+    public bool affectZ = true; // Affect Z rotation
 }
 
 public class RandomPose : MonoBehaviour
@@ -21,7 +24,7 @@ public class RandomPose : MonoBehaviour
     public BadPosture[] badPostures = new BadPosture[5]; // 6 main bad postures
 
     [Header("Output: Stretch values for each sensor")]
-    public float[] stretchValues; // [Red, Green, Blue, Purple, Orange, Cyan]
+    public float[] stretchValues; // [Red, Green, Blue, Purple, Orange, Cyan, Black, Pink]
 
     private List<Vector3> initialEulerAngles;
     public List<Transform> halfRigBones; // Stores every other bone from SelectBones.boneArray
@@ -106,9 +109,9 @@ public class RandomPose : MonoBehaviour
             
             // Add random variation for realism
             Vector3 randomVariation = new Vector3(
-                Random.Range(-selectedPosture.variationRange, selectedPosture.variationRange),
-                Random.Range(-selectedPosture.variationRange, selectedPosture.variationRange),
-                Random.Range(-selectedPosture.variationRange, selectedPosture.variationRange)
+                Random.Range(-selectedPosture.variationRange * (selectedPosture.affectX ? 1f: 0f), selectedPosture.variationRange * (selectedPosture.affectX ? 1f: 0f)),
+                Random.Range(-selectedPosture.variationRange * (selectedPosture.affectY ? 1f: 0f), selectedPosture.variationRange * (selectedPosture.affectY ? 1f: 0f)),
+                Random.Range(-selectedPosture.variationRange * (selectedPosture.affectZ ? 1f: 0f), selectedPosture.variationRange * (selectedPosture.affectZ ? 1f: 0f))
             );
 
             // Apply: neutral + medical offset + random variation
@@ -121,16 +124,18 @@ public class RandomPose : MonoBehaviour
         yield return null; // Wait one more frame
 
         // Now read the updated sensor values
-        stretchValues = new float[6];
+        stretchValues = new float[8];
         stretchValues[0] = stretchSensor._currentForceRed;
         stretchValues[1] = stretchSensor._currentForceGreen;
         stretchValues[2] = stretchSensor._currentForceBlue;
         stretchValues[3] = stretchSensor._currentForcePurple;
         stretchValues[4] = stretchSensor._currentForceOrange;
         stretchValues[5] = stretchSensor._currentForceCyan;
+        stretchValues[6] = stretchSensor._currentForceBlack; // NEW
+        stretchValues[7] = stretchSensor._currentForcePink;  // NEW
 
         // DEBUG: Check if we got non-zero values
-        Debug.Log($"RandomPose: {selectedPosture.name} generated stretch values: [{stretchValues[0]:F3}, {stretchValues[1]:F3}, {stretchValues[2]:F3}, {stretchValues[3]:F3}, {stretchValues[4]:F3}, {stretchValues[5]:F3}]");
+        //Debug.Log($"RandomPose: {selectedPosture.name} generated stretch values: [{stretchValues[0]:F3}, {stretchValues[1]:F3}, {stretchValues[2]:F3}, {stretchValues[3]:F3}, {stretchValues[4]:F3}, {stretchValues[5]:F3}]");
         
         bool allZeros = true;
         for (int i = 0; i < stretchValues.Length; i++)
@@ -163,7 +168,7 @@ public class RandomPose : MonoBehaviour
         if (postureIndex >= badPostures.Length) yield break;
 
         BadPosture testPosture = badPostures[postureIndex];
-        Debug.Log($"Testing {testPosture.name}...");
+        //Debug.Log($"Testing {testPosture.name}...");
 
         // Reset bones
         for (int i = 0; i < halfRigBones.Count; i++)
@@ -186,14 +191,16 @@ public class RandomPose : MonoBehaviour
         yield return null;
 
         // Read sensors
-        float[] testValues = new float[6];
+        float[] testValues = new float[8];
         testValues[0] = stretchSensor._currentForceRed;
         testValues[1] = stretchSensor._currentForceGreen;
         testValues[2] = stretchSensor._currentForceBlue;
         testValues[3] = stretchSensor._currentForcePurple;
         testValues[4] = stretchSensor._currentForceOrange;
         testValues[5] = stretchSensor._currentForceCyan;
+        testValues[6] = stretchSensor._currentForceBlack; // NEW
+        testValues[7] = stretchSensor._currentForcePink;  // NEW
 
-        Debug.Log($"Test {testPosture.name}: [{testValues[0]:F3}, {testValues[1]:F3}, {testValues[2]:F3}, {testValues[3]:F3}, {testValues[4]:F3}, {testValues[5]:F3}]");
+        //Debug.Log($"Test {testPosture.name}: [{testValues[0]:F3}, {testValues[1]:F3}, {testValues[2]:F3}, {testValues[3]:F3}, {testValues[4]:F3}, {testValues[5]:F3}]");
     }
 }

@@ -22,18 +22,24 @@ public class StretchSensorR : MonoBehaviour
     private List<int> _sensorVerticesPurple;
     private List<int> _sensorVerticesOrange;
     private List<int> _sensorVerticesCyan;
+    private List<int> _sensorVerticesBlack;
+    private List<int> _sensorVerticesPink;
     private float _restLengthRed;
     private float _restLengthGreen;
     private float _restLengthBlue;
     private float _restLengthPurple;
     private float _restLengthOrange;
     private float _restLengthCyan;
+    private float _restLengthBlack;
+    private float _restLengthPink;
     public float _currentForceRed;
     public float _currentForceGreen;
     public float _currentForceBlue;
     public float _currentForcePurple;
     public float _currentForceOrange;
     public float _currentForceCyan;
+    public float _currentForceBlack;
+    public float _currentForcePink;
 
     void Start()
     {
@@ -47,6 +53,9 @@ public class StretchSensorR : MonoBehaviour
         _sensorVerticesPurple = new List<int>();
         _sensorVerticesOrange = new List<int>();
         _sensorVerticesCyan = new List<int>();
+        _sensorVerticesBlack = new List<int>();   // Black selection
+        _sensorVerticesPink = new List<int>();    // Pink selection
+
         Color[] colors = _mesh.colors;
         for (int i = 0; i < colors.Length; i++)
         {
@@ -57,14 +66,22 @@ public class StretchSensorR : MonoBehaviour
                 _sensorVerticesGreen.Add(i);
             if (c.b > 0.9f && c.r < 0.1f && c.g < 0.1f)
                 _sensorVerticesBlue.Add(i);
-            
+
             if (c.r > 0.4f && c.r < 0.9f && c.b > 0.4f && c.b < 0.9f && c.g < 0.1f)
                 _sensorVerticesPurple.Add(i);
-            
+
             if (c.r > 0.4f && c.r < 0.9f && c.b < 0.1f && c.g > 0.4f && c.g < 0.9f)
                 _sensorVerticesOrange.Add(i);
             if (c.r < 0.1f && c.g > 0.4f && c.g < 0.9f && c.b > 0.4f && c.b < 0.9f)
                 _sensorVerticesCyan.Add(i);
+
+            // Black: r < 0.1, g < 0.1, b < 0.1
+            if (c.r < 0.1f && c.g < 0.1f && c.b < 0.1f)
+                _sensorVerticesBlack.Add(i);
+
+            // Pink: r > 0.9, b > 0.9, g < 0.1
+            if (c.r > 0.9f && c.b > 0.9f && c.g < 0.1f)
+                _sensorVerticesPink.Add(i);
         }
 
         // ORDER BLUE VERTICES 
@@ -78,7 +95,7 @@ public class StretchSensorR : MonoBehaviour
             return va.z.CompareTo(vb.z);
         });
 
-        //  ORDER PURPLE VERTICES AS MIRROR OF BLUE 
+        // ORDER PURPLE VERTICES AS MIRROR OF BLUE 
         List<int> orderedPurple = new List<int>();
         foreach (int blueIdx in _sensorVerticesBlue)
         {
@@ -102,6 +119,41 @@ public class StretchSensorR : MonoBehaviour
         }
         _sensorVerticesPurple = orderedPurple;
 
+        // ORDER BLACK VERTICES (like blue: by y, then x, then z)
+        _sensorVerticesBlack.Sort((a, b) => {
+            Vector3 va = _mesh.vertices[a];
+            Vector3 vb = _mesh.vertices[b];
+            int cmp = va.y.CompareTo(vb.y);
+            if (cmp != 0) return cmp;
+            cmp = va.x.CompareTo(vb.x);
+            if (cmp != 0) return cmp;
+            return va.z.CompareTo(vb.z);
+        });
+
+        // ORDER PINK VERTICES AS MIRROR OF BLACK
+        List<int> orderedPink = new List<int>();
+        foreach (int blackIdx in _sensorVerticesBlack)
+        {
+            Vector3 blackPos = _mesh.vertices[blackIdx];
+            Vector3 mirrored = new Vector3(-blackPos.x, blackPos.y, blackPos.z);
+
+            float minDist = float.MaxValue;
+            int bestPink = -1;
+            foreach (int pinkIdx in _sensorVerticesPink)
+            {
+                Vector3 pinkPos = _mesh.vertices[pinkIdx];
+                float dist = Vector3.Distance(mirrored, pinkPos);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    bestPink = pinkIdx;
+                }
+            }
+            if (bestPink != -1)
+                orderedPink.Add(bestPink);
+        }
+        _sensorVerticesPink = orderedPink;
+
         // --- CALCULATE REST LENGTHS ---
         Mesh bakedMesh = new Mesh();
         _skin.BakeMesh(bakedMesh);
@@ -113,6 +165,8 @@ public class StretchSensorR : MonoBehaviour
         _restLengthPurple = CalculateLength(_sensorVerticesPurple, vertices);
         _restLengthOrange = CalculateLength(_sensorVerticesOrange, vertices);
         _restLengthCyan = CalculateLength(_sensorVerticesCyan, vertices);
+        _restLengthBlack = CalculateLength(_sensorVerticesBlack, vertices);
+        _restLengthPink = CalculateLength(_sensorVerticesPink, vertices);
     }
 
     float CalculateLength(List<int> indices, Vector3[] vertices)
@@ -139,6 +193,8 @@ public class StretchSensorR : MonoBehaviour
         float currentLengthPurple = CalculateLength(_sensorVerticesPurple, vertices);
         float currentLengthOrange = CalculateLength(_sensorVerticesOrange, vertices);
         float currentLengthCyan = CalculateLength(_sensorVerticesCyan, vertices);
+        float currentLengthBlack = CalculateLength(_sensorVerticesBlack, vertices);
+        float currentLengthPink = CalculateLength(_sensorVerticesPink, vertices);
 
         float stretchRed = Mathf.Max(0, currentLengthRed - _restLengthRed);
         float stretchGreen = Mathf.Max(0, currentLengthGreen - _restLengthGreen);
@@ -146,6 +202,8 @@ public class StretchSensorR : MonoBehaviour
         float stretchPurple = Mathf.Max(0, currentLengthPurple - _restLengthPurple);
         float stretchOrange = Mathf.Max(0, currentLengthOrange - _restLengthOrange);
         float stretchCyan = Mathf.Max(0, currentLengthCyan - _restLengthCyan);
+        float stretchBlack = Mathf.Max(0, currentLengthBlack - _restLengthBlack);
+        float stretchPink = Mathf.Max(0, currentLengthPink - _restLengthPink);
 
         _currentForceRed = Mathf.Clamp(stretchRed * sensitivity*10, 0, maxOutputForce);
         _currentForceGreen = Mathf.Clamp(stretchGreen * sensitivity*10, 0, maxOutputForce);
@@ -153,6 +211,8 @@ public class StretchSensorR : MonoBehaviour
         _currentForcePurple = Mathf.Clamp(stretchPurple * sensitivity*10, 0, maxOutputForce);
         _currentForceOrange = Mathf.Clamp(stretchOrange * sensitivity*10, 0, maxOutputForce);
         _currentForceCyan = Mathf.Clamp(stretchCyan * sensitivity*10, 0, maxOutputForce);
+        _currentForceBlack = Mathf.Clamp(stretchBlack * sensitivity * 10, 0, maxOutputForce);
+        _currentForcePink = Mathf.Clamp(stretchPink * sensitivity * 10, 0, maxOutputForce);
 
         if (forceText != null)
         {
@@ -162,7 +222,9 @@ public class StretchSensorR : MonoBehaviour
                 "<color=blue>Blue Force: " + $"{_currentForceBlue:F2}</color>\n" +
                 "<color=#A020F0>Purple Force: " + $"{_currentForcePurple:F2}</color>\n" +
                 "<color=#FFA500>Orange Force: " + $"{_currentForceOrange:F2}</color>\n" +
-                "<color=#00FFFF>Cyan Force: " + $"{_currentForceCyan:F2}</color>";
+                "<color=#00FFFF>Cyan Force: " + $"{_currentForceCyan:F2}</color>\n" +
+                "<color=#222222>Black Force: " + $"{_currentForceBlack:F2}</color>\n" +
+                "<color=#FF00FF>Pink Force: " + $"{_currentForcePink:F2}</color>";
         }
     }
 

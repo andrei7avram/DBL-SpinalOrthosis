@@ -34,8 +34,8 @@ public class mlagent : Agent
     private List<Transform> rigBonesHalved;
     private List<Vector3> initialBoneEulerAngles;
     private bool needNewPose = true;
-    private float[] currentForces = new float[6];
-    private float[] targetForces = new float[6];
+    private float[] currentForces = new float[8]; // Updated for 8 sensors
+    private float[] targetForces = new float[8];  // Updated for 8 sensors
     private Vector3[] lastActions;
     private float currentActionScale;
     private int currentStepCount = 0;
@@ -182,9 +182,9 @@ public class mlagent : Agent
 
     private void UpdateTargetForces()
     {
-        if (randomPoseScript.stretchValues != null && randomPoseScript.stretchValues.Length >= 6)
+        if (randomPoseScript.stretchValues != null && randomPoseScript.stretchValues.Length >= 8)
         {
-            System.Array.Copy(randomPoseScript.stretchValues, targetForces, 6);
+            System.Array.Copy(randomPoseScript.stretchValues, targetForces, 8);
         }
     }
 
@@ -196,6 +196,8 @@ public class mlagent : Agent
         currentForces[3] = stretchSensor._currentForcePurple;
         currentForces[4] = stretchSensor._currentForceOrange;
         currentForces[5] = stretchSensor._currentForceCyan;
+        currentForces[6] = stretchSensor._currentForceBlack; // NEW
+        currentForces[7] = stretchSensor._currentForcePink;  // NEW
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -203,7 +205,7 @@ public class mlagent : Agent
         UpdateCurrentForces();
 
         // Add current and target forces
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 8; i++) // Updated for 8 sensors
         {
             sensor.AddObservation(Mathf.Clamp(currentForces[i] * 10f, 0f, 10f));
             sensor.AddObservation(Mathf.Clamp(targetForces[i] * 10f, 0f, 10f));
@@ -262,9 +264,9 @@ public class mlagent : Agent
             // Calculate new euler angles within ±5 degrees of initial pose
             Vector3 initialEuler = initialBoneEulerAngles[i];
             Vector3 newEuler = new Vector3(
-                Mathf.Clamp(initialEuler.x + smoothedAction.x * 5f, initialEuler.x - 5f, initialEuler.x + 5f),
-                Mathf.Clamp(initialEuler.y + smoothedAction.y * 5f, initialEuler.y - 5f, initialEuler.y + 5f),
-                Mathf.Clamp(initialEuler.z + smoothedAction.z * 5f, initialEuler.z - 5f, initialEuler.z + 5f)
+                Mathf.Clamp(initialEuler.x + smoothedAction.x * 20f, initialEuler.x - 20f, initialEuler.x + 20f),
+                Mathf.Clamp(initialEuler.y + smoothedAction.y * 3f, initialEuler.y - 3f, initialEuler.y + 3f),
+                Mathf.Clamp(initialEuler.z + smoothedAction.z * 10f, initialEuler.z - 10f, initialEuler.z + 10f)
             );
 
             rigBonesHalved[i].localEulerAngles = newEuler;
@@ -344,7 +346,7 @@ public class mlagent : Agent
     private float CalculateTotalError()
     {
         float totalError = 0f;
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 8; i++) // Updated for 8 sensors
         {
             totalError += Mathf.Abs(currentForces[i] - targetForces[i]);
         }
@@ -354,7 +356,6 @@ public class mlagent : Agent
     private bool IsSuccessful()
     {
         float totalError = CalculateTotalError();
-        
         // Success ONLY if we meet the threshold
         return totalError < successThreshold;
     }
