@@ -77,7 +77,8 @@ public class RandomPose : MonoBehaviour
         StartCoroutine(GenerateMedicalPostureCoroutine());
     }
 
-    private IEnumerator GenerateMedicalPostureCoroutine()
+    // Made this public so MLAgent can wait for it
+    public IEnumerator GenerateMedicalPostureCoroutine()
     {
         // --- Reset all bones in halfRigBones to their initial rotation ---
         for (int i = 0; i < halfRigBones.Count; i++)
@@ -135,7 +136,7 @@ public class RandomPose : MonoBehaviour
         stretchValues[7] = stretchSensor._currentForcePink;  // NEW
 
         // DEBUG: Check if we got non-zero values
-        //Debug.Log($"RandomPose: {selectedPosture.name} generated stretch values: [{stretchValues[0]:F3}, {stretchValues[1]:F3}, {stretchValues[2]:F3}, {stretchValues[3]:F3}, {stretchValues[4]:F3}, {stretchValues[5]:F3}]");
+        Debug.Log($"RandomPose: {selectedPosture.name} generated stretch values: [{string.Join(", ", stretchValues)}]");
         
         bool allZeros = true;
         for (int i = 0; i < stretchValues.Length; i++)
