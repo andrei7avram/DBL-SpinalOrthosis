@@ -85,7 +85,8 @@ public class StretchSensorR : MonoBehaviour
         }
 
         // ORDER BLUE VERTICES 
-        _sensorVerticesBlue.Sort((a, b) => {
+        _sensorVerticesBlue.Sort((a, b) =>
+        {
             Vector3 va = _mesh.vertices[a];
             Vector3 vb = _mesh.vertices[b];
             int cmp = va.y.CompareTo(vb.y);
@@ -120,7 +121,8 @@ public class StretchSensorR : MonoBehaviour
         _sensorVerticesPurple = orderedPurple;
 
         // ORDER BLACK VERTICES (like blue: by y, then x, then z)
-        _sensorVerticesBlack.Sort((a, b) => {
+        _sensorVerticesBlack.Sort((a, b) =>
+        {
             Vector3 va = _mesh.vertices[a];
             Vector3 vb = _mesh.vertices[b];
             int cmp = va.y.CompareTo(vb.y);
@@ -167,6 +169,9 @@ public class StretchSensorR : MonoBehaviour
         _restLengthCyan = CalculateLength(_sensorVerticesCyan, vertices);
         _restLengthBlack = CalculateLength(_sensorVerticesBlack, vertices);
         _restLengthPink = CalculateLength(_sensorVerticesPink, vertices);
+        
+        // print number of pink and black vertices
+        Debug.Log($"Black vertices: {_sensorVerticesBlack.Count}, Pink vertices: {_sensorVerticesPink.Count}");
     }
 
     float CalculateLength(List<int> indices, Vector3[] vertices)

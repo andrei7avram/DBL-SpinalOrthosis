@@ -527,6 +527,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &453460236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,9 +592,9 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
     - {x: 10, y: 0, z: 0}
-    - {x: 10, y: 0, z: 0}
+    - {x: 15, y: 0, z: 0}
+    - {x: 15, y: 0, z: 0}
     - {x: 10, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -802,8 +804,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

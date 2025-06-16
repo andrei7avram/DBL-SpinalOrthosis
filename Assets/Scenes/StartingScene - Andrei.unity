@@ -960,7 +960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -1026,7 +1026,7 @@ MonoBehaviour:
   timeoutPenalty: -2
   actionSmoothing: 0.8
   improvementThreshold: 0.05
-  successThreshold: 0.1
+  successThreshold: 0.3
   initialActionScale: 5
   finalActionScale: 0.5
   thresholdReductionSteps: 200000
@@ -1831,9 +1831,9 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
     - {x: 10, y: 0, z: 0}
-    - {x: 10, y: 0, z: 0}
+    - {x: 15, y: 0, z: 0}
+    - {x: 15, y: 0, z: 0}
     - {x: 10, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -5050,7 +5050,7 @@ MonoBehaviour:
   timeoutPenalty: -2
   actionSmoothing: 0.8
   improvementThreshold: 0.05
-  successThreshold: 0.1
+  successThreshold: 0.3
   initialActionScale: 5
   finalActionScale: 0.5
   thresholdReductionSteps: 200000
@@ -10165,7 +10165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -10231,7 +10231,7 @@ MonoBehaviour:
   timeoutPenalty: -2
   actionSmoothing: 0.8
   improvementThreshold: 0.05
-  successThreshold: 0.1
+  successThreshold: 0.3
   initialActionScale: 5
   finalActionScale: 0.5
   thresholdReductionSteps: 200000
@@ -10969,7 +10969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -11035,7 +11035,7 @@ MonoBehaviour:
   timeoutPenalty: -2
   actionSmoothing: 0.8
   improvementThreshold: 0.05
-  successThreshold: 0.1
+  successThreshold: 0.3
   initialActionScale: 5
   finalActionScale: 0.5
   thresholdReductionSteps: 200000
@@ -11927,7 +11927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -11993,7 +11993,7 @@ MonoBehaviour:
   timeoutPenalty: -2
   actionSmoothing: 0.8
   improvementThreshold: 0.05
-  successThreshold: 0.1
+  successThreshold: 0.3
   initialActionScale: 5
   finalActionScale: 0.5
   thresholdReductionSteps: 200000
@@ -14367,7 +14367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -14433,7 +14433,7 @@ MonoBehaviour:
   timeoutPenalty: -2
   actionSmoothing: 0.8
   improvementThreshold: 0.05
-  successThreshold: 0.1
+  successThreshold: 0.3
   initialActionScale: 5
   finalActionScale: 0.5
   thresholdReductionSteps: 200000
