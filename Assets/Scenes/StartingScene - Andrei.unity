@@ -794,7 +794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1025,13 +1025,9 @@ MonoBehaviour:
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
-  successThreshold: 0.3
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
-  enableDebug: 1
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 0
 --- !u!1001 &88201860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2940,13 +2936,9 @@ MonoBehaviour:
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
   enableDebug: 1
+  inferenceMode: 0
 --- !u!1001 &216541465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3740,13 +3732,9 @@ MonoBehaviour:
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
   enableDebug: 1
+  inferenceMode: 0
 --- !u!1001 &239194893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4540,13 +4528,9 @@ MonoBehaviour:
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
   enableDebug: 1
+  inferenceMode: 0
 --- !u!4 &243015523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2614762758377866007, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
@@ -5049,13 +5033,9 @@ MonoBehaviour:
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
-  successThreshold: 0.3
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
-  enableDebug: 1
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 0
 --- !u!114 &453460244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7251,13 +7231,9 @@ MonoBehaviour:
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
   enableDebug: 1
+  inferenceMode: 0
 --- !u!1001 &805157880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8051,13 +8027,9 @@ MonoBehaviour:
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
   enableDebug: 1
+  inferenceMode: 0
 --- !u!1 &810073202
 GameObject:
   m_ObjectHideFlags: 0
@@ -8860,7 +8832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9999,7 +9971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10230,13 +10202,9 @@ MonoBehaviour:
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
-  successThreshold: 0.3
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
-  enableDebug: 1
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 0
 --- !u!1001 &1476682033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10803,7 +10771,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11034,13 +11002,9 @@ MonoBehaviour:
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
-  successThreshold: 0.3
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
-  enableDebug: 1
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 0
 --- !u!4 &1481441480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4698601270361415218, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
@@ -11992,13 +11956,9 @@ MonoBehaviour:
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
-  successThreshold: 0.3
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
-  enableDebug: 1
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 0
 --- !u!1001 &2073980645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12792,13 +12752,9 @@ MonoBehaviour:
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
   enableDebug: 1
+  inferenceMode: 0
 --- !u!1001 &2105264559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13592,13 +13548,9 @@ MonoBehaviour:
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
   enableDebug: 1
+  inferenceMode: 0
 --- !u!1 &2134611837
 GameObject:
   m_ObjectHideFlags: 0
@@ -14201,7 +14153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090888434187635047, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5392390209365313541, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14432,13 +14384,9 @@ MonoBehaviour:
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  improvementThreshold: 0.05
-  successThreshold: 0.3
-  initialActionScale: 5
-  finalActionScale: 0.5
-  thresholdReductionSteps: 200000
-  scaleReductionSteps: 300000
-  enableDebug: 1
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 0
 --- !u!4 &90457147015907549
 Transform:
   m_ObjectHideFlags: 0

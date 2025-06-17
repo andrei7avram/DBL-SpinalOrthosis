@@ -92,7 +92,7 @@ public class RandomPose : MonoBehaviour
         yield return null;
 
         // --- Randomly select one of the 6 bad postures ---
-        int randomPostureIndex = Random.Range(0, badPostures.Length);
+        int randomPostureIndex = Random.Range(1, badPostures.Length);
         BadPosture selectedPosture = badPostures[randomPostureIndex];
 
         Debug.Log($"RandomPose: Generating {selectedPosture.name}");
