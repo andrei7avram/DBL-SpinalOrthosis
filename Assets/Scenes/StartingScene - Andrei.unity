@@ -969,8 +969,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -1020,14 +1020,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 80802830}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 80802826}
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0.2
   enableDebug: 0
-  inferenceMode: 0
+  inferenceMode: 1
 --- !u!1001 &88201860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4987,8 +4987,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -5028,14 +5028,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 453460233}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 453460244}
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0.2
   enableDebug: 0
-  inferenceMode: 0
+  inferenceMode: 1
 --- !u!114 &453460244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10146,8 +10146,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -10197,14 +10197,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 1467129461}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 1467129457}
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0.2
   enableDebug: 0
-  inferenceMode: 0
+  inferenceMode: 1
 --- !u!1001 &1476682033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10946,8 +10946,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -10997,14 +10997,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 1476682040}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 1476682036}
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0.2
   enableDebug: 0
-  inferenceMode: 0
+  inferenceMode: 1
 --- !u!4 &1481441480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4698601270361415218, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
@@ -11900,8 +11900,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -11951,14 +11951,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 2039978355}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2039978351}
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0.2
   enableDebug: 0
-  inferenceMode: 0
+  inferenceMode: 1
 --- !u!1001 &2073980645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14328,8 +14328,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -14379,14 +14379,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 2141046093}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2141046089}
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0.2
   enableDebug: 0
-  inferenceMode: 0
+  inferenceMode: 1
 --- !u!4 &90457147015907549
 Transform:
   m_ObjectHideFlags: 0
