@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 [System.Serializable]
@@ -28,6 +29,12 @@ public class RandomPose : MonoBehaviour
 
     private List<Vector3> initialEulerAngles;
     public List<Transform> halfRigBones; // Stores every other bone from SelectBones.boneArray
+
+    public bool isLordosis = false;
+    public bool isScoliosisL = false;
+    public bool isScoliosisR = false;
+    public bool isForwardHead = false;
+    public bool isKyphosis = false;
 
     void Start()
     {
@@ -92,7 +99,37 @@ public class RandomPose : MonoBehaviour
         yield return null;
 
         // --- Randomly select one of the 6 bad postures ---
-        int randomPostureIndex = Random.Range(1, badPostures.Length);
+        int randomPostureIndex = 0;
+        if (isLordosis || isScoliosisL || isScoliosisR || isForwardHead || isKyphosis)
+        {
+            // If any specific posture is enabled, use that instead of random selection
+            if (isLordosis)
+            {
+                randomPostureIndex = 1;
+            }
+            else if (isScoliosisL)
+            {
+                randomPostureIndex = 4;
+            }
+            else if (isScoliosisR)
+            {
+                randomPostureIndex = 3;
+            }
+            else if (isForwardHead)
+            {
+                randomPostureIndex = 2;
+            }
+            else if (isKyphosis)
+            {
+                randomPostureIndex = 0;
+            }
+
+        }
+        else
+        {
+            // Randomly select a posture from the array
+            randomPostureIndex = Random.Range(1, badPostures.Length);
+        }
         BadPosture selectedPosture = badPostures[randomPostureIndex];
 
         Debug.Log($"RandomPose: Generating {selectedPosture.name}");
@@ -104,15 +141,15 @@ public class RandomPose : MonoBehaviour
 
             // Start with initial neutral position
             Vector3 baseRotation = initialEulerAngles[i * 2];
-            
+
             // Add the medical posture offset
             Vector3 postureOffset = selectedPosture.boneRotationOffsets[i];
-            
+
             // Add random variation for realism
             Vector3 randomVariation = new Vector3(
-                Random.Range(-selectedPosture.variationRange * (selectedPosture.affectX ? 1f: 0f), selectedPosture.variationRange * (selectedPosture.affectX ? 1f: 0f)),
-                Random.Range(-selectedPosture.variationRange * (selectedPosture.affectY ? 1f: 0f), selectedPosture.variationRange * (selectedPosture.affectY ? 1f: 0f)),
-                Random.Range(-selectedPosture.variationRange * (selectedPosture.affectZ ? 1f: 0f), selectedPosture.variationRange * (selectedPosture.affectZ ? 1f: 0f))
+                Random.Range(-selectedPosture.variationRange * (selectedPosture.affectX ? 1f : 0f), selectedPosture.variationRange * (selectedPosture.affectX ? 1f : 0f)),
+                Random.Range(-selectedPosture.variationRange * (selectedPosture.affectY ? 1f : 0f), selectedPosture.variationRange * (selectedPosture.affectY ? 1f : 0f)),
+                Random.Range(-selectedPosture.variationRange * (selectedPosture.affectZ ? 1f : 0f), selectedPosture.variationRange * (selectedPosture.affectZ ? 1f : 0f))
             );
 
             // Apply: neutral + medical offset + random variation
@@ -137,7 +174,7 @@ public class RandomPose : MonoBehaviour
 
         // DEBUG: Check if we got non-zero values
         Debug.Log($"RandomPose: {selectedPosture.name} generated stretch values: [{string.Join(", ", stretchValues)}]");
-        
+
         bool allZeros = true;
         for (int i = 0; i < stretchValues.Length; i++)
         {
@@ -147,7 +184,7 @@ public class RandomPose : MonoBehaviour
                 break;
             }
         }
-        
+
         if (allZeros)
         {
             Debug.LogWarning($"RandomPose: All stretch values are still zero after generating {selectedPosture.name}!");
@@ -204,4 +241,63 @@ public class RandomPose : MonoBehaviour
 
         //Debug.Log($"Test {testPosture.name}: [{testValues[0]:F3}, {testValues[1]:F3}, {testValues[2]:F3}, {testValues[3]:F3}, {testValues[4]:F3}, {testValues[5]:F3}]");
     }
+
+    public void SetisLordosisTrue()
+    {
+        isLordosis = true;
+        isScoliosisL = false;
+        isScoliosisR = false;
+        isForwardHead = false;
+        isKyphosis = false;
+    }
+
+    public void SetisScoliosisLTrue()
+    {
+        isLordosis = false;
+        isScoliosisL = true;
+        isScoliosisR = false;
+        isForwardHead = false;
+        isKyphosis = false;
+    }
+
+    public void SetisScoliosisRTrue()
+    {
+        isLordosis = false;
+        isScoliosisL = false;
+        isScoliosisR = true;
+        isForwardHead = false;
+        isKyphosis = false;
+    }
+
+    public void SetisForwardHeadTrue()
+    {
+        isLordosis = false;
+        isScoliosisL = false;
+        isScoliosisR = false;
+        isForwardHead = true;
+        isKyphosis = false;
+    }
+
+
+    public void SetisKyphosisTrue()
+    {
+        isLordosis = false;
+        isScoliosisL = false;
+        isScoliosisR = false;
+        isForwardHead = false;
+        isKyphosis = true;
+    }
+
+    public void ResetPostureFlags()
+    {
+        isLordosis = false;
+        isScoliosisL = false;
+        isScoliosisR = false;
+        isForwardHead = false;
+        isKyphosis = false;
+    }
+    
+
+
+
 }

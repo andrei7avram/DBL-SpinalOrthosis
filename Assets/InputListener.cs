@@ -7,53 +7,50 @@ using UnityEngine.UI;
 public class InputListener : MonoBehaviour
 {
     public TextMeshProUGUI inputText;
-    public float unsolvedInput = 0;
-    public int[] solvedInput = new int[8];
+    public float[] solvedInput = new float[8];
     private Coroutine[] warningCoroutines = new Coroutine[8];
     private int[] criticalValues = new int[8] { 1000, 2000, 2000, 2000, 2000, 2000, 2000, 2000 };
 
     void Update()
     {
-        float parsedValue;
-        if (float.TryParse(inputText.text, out parsedValue))
+        // Split by backslash and get first 8 numbers between '\'
+        //Debug.Log("Input Text: " + inputText.text);
+        string[] parts = inputText.text.Split(new[] { '\\' }, System.StringSplitOptions.RemoveEmptyEntries);
+        //Debug.Log(parts[2]);
+        for (int i = 0; i < solvedInput.Length; i++)
         {
-            unsolvedInput = parsedValue;
-        }
-
-        string[] parts = inputText.text.Split('\\');
-        for (int i = 0; i < solvedInput.Length && i < parts.Length; i++)
-        {
-            int parsedInt;
-            if (int.TryParse(parts[i], out parsedInt))
+            if (i < parts.Length && float.TryParse(parts[i], out float parsedInt))
             {
                 solvedInput[i] = parsedInt;
+            }
+            else
+            {
+                solvedInput[i] = 0;
             }
         }
 
         for (int i = 0; i < solvedInput.Length; i++)
-    {
-        if (solvedInput[i] <= criticalValues[i])
         {
-            if (warningCoroutines[i] == null)
-                warningCoroutines[i] = StartCoroutine(CriticalWarning(i));
-        }
-        else
-        {
-            if (warningCoroutines[i] != null)
+            if (solvedInput[i] <= criticalValues[i])
             {
-                StopCoroutine(warningCoroutines[i]);
-                warningCoroutines[i] = null;
+                if (warningCoroutines[i] == null)
+                    warningCoroutines[i] = StartCoroutine(CriticalWarning(i));
+            }
+            else
+            {
+                if (warningCoroutines[i] != null)
+                {
+                    StopCoroutine(warningCoroutines[i]);
+                    warningCoroutines[i] = null;
+                }
             }
         }
-    }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log($"Unsolved Input: {unsolvedInput}");
             Debug.Log("Solved Input: " + string.Join(", ", solvedInput));
         }
     }
-    
 
 
     public IEnumerator CriticalWarning(int index)
