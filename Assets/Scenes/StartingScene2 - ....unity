@@ -246,7 +246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &373495345
 RectTransform:
   m_ObjectHideFlags: 0
@@ -551,8 +551,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 72
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1429,7 +1429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1613394356
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1660,8 +1660,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputText: {fileID: 373495346}
-  unsolvedInput: 0
-  solvedInput: 0000000000000000000000000000000000000000000000000000000000000000
+  solvedInput: []
+  randomPoseScript: {fileID: 0}
+  agentManager: {fileID: 0}
+  objectToActivate: {fileID: 0}
+  isReady: 0
 --- !u!114 &1792321341
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -73,7 +73,7 @@ public class SelectBones : MonoBehaviour
             Debug.Log("(First element removed, all shifted down, rootObject added last)");
             for (int i = 0; i < boneArray.Length; i++)
             {
-                Debug.Log($"Index {i}: {(boneArray[i] != null ? boneArray[i].name : "null")}");
+                //Debug.Log($"Index {i}: {(boneArray[i] != null ? boneArray[i].name : "null")}");
             }
         }
     }

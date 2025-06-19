@@ -25,9 +25,6 @@ public class AgentManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Call this to start one random pose and six parallel inference runs.
-    /// </summary>
     public void StartParallelInference()
     {
         if (testRunning) return;
@@ -94,6 +91,35 @@ public class AgentManager : MonoBehaviour
         };
         Debug.Log($"Agent '{winner.name}' succeeded. Visualization array updated.");
         Debug.Log("Sensor Forces: " + string.Join(", ", sensorForces));
+    }
+
+    /// <summary>
+    /// Sets the visualization bones to the pose stored in the first index of badPostures from RandomPose.
+    /// </summary>
+    public void SetVisualizationToFirstBadPosture()
+    {
+        if (randomPoseScript == null || randomPoseScript.badPostures == null || randomPoseScript.badPostures.Length == 0)
+        {
+            Debug.LogWarning("RandomPose or badPostures not set up correctly.");
+            return;
+        }
+
+        var posture = randomPoseScript.badPostures[0];
+        if (posture.boneRotationOffsets == null || posture.boneRotationOffsets.Length == 0)
+        {
+            Debug.LogWarning("First badPosture has no boneRotationOffsets.");
+            return;
+        }
+
+        int count = Mathf.Min(visualizationBones.Length, posture.boneRotationOffsets.Length);
+        for (int i = 0; i < count; i++)
+        {
+            if (visualizationBones[i] != null)
+            {
+                visualizationBones[i].localEulerAngles = posture.boneRotationOffsets[i];
+            }
+        }
+        Debug.Log("Visualization bones set to first bad posture.");
     }
 
     private void OnDestroy()
