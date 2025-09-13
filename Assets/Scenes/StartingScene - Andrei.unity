@@ -960,7 +960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -969,8 +969,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -999,6 +999,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &80802831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1018,17 +1020,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 80802830}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 80802826}
-  solvedPoses: 0
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  successThreshold: 0.1
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 1
 --- !u!1001 &88201860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1793,6 +1792,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &88201864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1819,6 +1820,102 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stretchSensor: {fileID: 88201863}
   selectBonesScript: {fileID: 88201871}
+  badPostures:
+  - name: Kyphosis
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 15, y: 0, z: 0}
+    - {x: 15, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -9.21, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 0.3
+    affectX: 1
+    affectY: 1
+    affectZ: 0
+  - name: Lordosis
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 15, y: 0, z: 0}
+    - {x: -20, y: 0, z: 0}
+    - {x: -15, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 0.5
+    affectX: 1
+    affectY: 1
+    affectZ: 0
+  - name: Forward-Neck
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 10, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -9.21, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 0.2
+    affectX: 1
+    affectY: 1
+    affectZ: 1
+  - name: R-Scoliosis
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 10}
+    - {x: 0, y: 0, z: 10}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: -10}
+    - {x: -9.21, y: 0, z: -10}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 1.5
+    affectX: 1
+    affectY: 1
+    affectZ: 1
+  - name: L-Scoliosis
+    boneRotationOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: -10}
+    - {x: 0, y: 0, z: -10}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 10}
+    - {x: -9.21, y: 0, z: 10}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    variationRange: 1.5
+    affectX: 1
+    affectY: 1
+    affectZ: 1
   stretchValues: []
   halfRigBones: []
 --- !u!114 &88201868
@@ -2813,6 +2910,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &212949562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2832,17 +2931,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 212949561}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 212949557}
-  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  enableDebug: 1
+  inferenceMode: 0
 --- !u!1001 &216541465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3610,6 +3706,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &216541473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3629,17 +3727,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 216541472}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 216541468}
-  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  enableDebug: 1
+  inferenceMode: 0
 --- !u!1001 &239194893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4407,6 +4502,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &239194901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4426,17 +4523,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 239194900}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 239194896}
-  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  enableDebug: 1
+  inferenceMode: 0
 --- !u!4 &243015523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2614762758377866007, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
@@ -4869,6 +4963,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &453460235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4882,7 +4978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -4891,8 +4987,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -4932,17 +5028,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 453460233}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 453460244}
-  solvedPoses: 0
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  successThreshold: 0.1
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 1
 --- !u!114 &453460244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7112,6 +7205,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &790590731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7131,17 +7226,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 790590730}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 790590726}
-  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  enableDebug: 1
+  inferenceMode: 0
 --- !u!1001 &805157880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7909,6 +8001,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &805157888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7928,17 +8022,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 805157887}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 805157883}
-  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  enableDebug: 1
+  inferenceMode: 0
 --- !u!1 &810073202
 GameObject:
   m_ObjectHideFlags: 0
@@ -10046,7 +10137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -10055,8 +10146,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -10085,6 +10176,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &1467129462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10104,17 +10197,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 1467129461}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 1467129457}
-  solvedPoses: 0
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  successThreshold: 0.1
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 1
 --- !u!1001 &1476682033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10847,7 +10937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -10856,8 +10946,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -10886,6 +10976,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &1476682041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10905,17 +10997,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 1476682040}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 1476682036}
-  solvedPoses: 0
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  successThreshold: 0.1
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 1
 --- !u!4 &1481441480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4698601270361415218, guid: fb80b3a8ea868064cbbf436b4cbccf00, type: 3}
@@ -11802,7 +11891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -11811,8 +11900,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -11841,6 +11930,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &2039978356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11860,17 +11951,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 2039978355}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2039978351}
-  solvedPoses: 0
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  successThreshold: 0.1
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 1
 --- !u!1001 &2073980645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12638,6 +12726,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &2073980653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12657,17 +12747,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 2073980652}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2073980648}
-  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  enableDebug: 1
+  inferenceMode: 0
 --- !u!1001 &2105264559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13435,6 +13522,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &2105264567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13454,17 +13543,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 2105264566}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2105264562}
-  solvedPoses: 0
   maxStepsPerEpisode: 10000
   stepPenalty: -0.001
   successReward: 1000
   timeoutPenalty: -2
   actionSmoothing: 0.8
   successThreshold: 0
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  enableDebug: 1
+  inferenceMode: 0
 --- !u!1 &2134611837
 GameObject:
   m_ObjectHideFlags: 0
@@ -14233,7 +14319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 51
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 39
@@ -14242,8 +14328,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 5022602860645237092, guid: 2564a59e3ec668040ab3847bd24a38fc, type: 3}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: newAgent
   TeamId: 0
@@ -14272,6 +14358,8 @@ MonoBehaviour:
   _currentForcePurple: 0
   _currentForceOrange: 0
   _currentForceCyan: 0
+  _currentForceBlack: 0
+  _currentForcePink: 0
 --- !u!114 &2141046094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14291,17 +14379,14 @@ MonoBehaviour:
   stretchSensor: {fileID: 2141046093}
   randomPoseScript: {fileID: 88201865}
   selectBonesScript: {fileID: 2141046089}
-  solvedPoses: 0
-  maxStepsPerEpisode: 500
+  maxStepsPerEpisode: 10000
   stepPenalty: -0.002
   successReward: 100
   timeoutPenalty: -2
   actionSmoothing: 0.8
-  successThreshold: 0.1
-  initialActionScale: 5
-  finalActionScale: 0.5
-  scaleReductionSteps: 300000
-  episodesPerPose: 50
+  successThreshold: 0.2
+  enableDebug: 0
+  inferenceMode: 1
 --- !u!4 &90457147015907549
 Transform:
   m_ObjectHideFlags: 0
