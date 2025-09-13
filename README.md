@@ -12,13 +12,7 @@
 This system is aimed at **posture correction and spinal health monitoring**, addressing the growing need for **real-time feedback** in rehabilitation and everyday posture maintenance.
 
 ---
-
-## 📽️ Demo
-
-![Demo GIF or Screenshot Placeholder]  
-*A full-body digital twin mimics user posture from wearable sensors in real-time.*
-
-> **Watch the full demo:** *[Insert video link if available]*
+<img width="1011" height="565" alt="image" src="https://github.com/user-attachments/assets/0cbb4e79-f4b7-4d67-aac1-9ce14f1f30e0" />
 
 ---
 
